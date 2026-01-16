@@ -38,4 +38,4 @@ A diferencia de implementaciones convencionales, este proyecto atravesó una fas
 * `src/`: Scripts auxiliares para la carga de datos.
 
 ---
-**Desarrollado por [Carolina Montanares]** *Estudiante de Ingeniería en Informática - Universidad Bernardo Ohiggins*
+**Desarrollado por Carolina Montanares** *Estudiante de Ingeniería en Informática - Universidad Bernardo Ohiggins*
