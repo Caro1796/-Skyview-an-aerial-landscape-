@@ -2,37 +2,40 @@
 # Proyecto de Visión por Computadora con Deep Learning
 
 ## Resumen del Proyecto
-Este proyecto desarrolla un modelo de clasificación automática de terrenos basado en imágenes aéreas. Utilizando redes neuronales convolucionales (CNN), el sistema es capaz de distinguir entre diferentes categorías de paisajes (como bosques, desiertos o zonas urbanas), permitiendo el análisis de datos geoespaciales a gran escala.
+Este proyecto desarrolla un modelo de clasificación automática de terrenos basado en imágenes aéreas de alta resolución. Utilizando **Redes Neuronales Convolucionales (CNN)**, el sistema es capaz de distinguir entre 15 categorías distintas de paisajes (como puertos, bosques, glaciares y zonas urbanas), permitiendo el análisis automatizado de datos geoespaciales.
 
 ## Dataset
-Se utilizó el dataset de **Skyview / Aerial Landscapes**. 
-* **Origen:** Imágenes capturadas desde perspectivas aéreas (cenitales).
-* **Procesamiento:** Normalización de píxeles, redimensionamiento de imágenes para la entrada de la red y técnicas de *Data Augmentation* para prevenir el sobreajuste.
+Se utilizó el dataset **Skyview / Aerial Landscapes** obtenido de Kaggle.
+* **Tamaño:** +25,000 imágenes organizadas en 15 clases competitivas.
+* **Pre-procesamiento:** Normalización de píxeles (0-1) y redimensionamiento dinámico a 256x256.
+* **Ingeniería de Datos:** Implementación de *Data Augmentation* (rotación, giros horizontales y ajuste de brillo) para fortalecer la robustez del modelo frente a variaciones de captura.
 
 ## Stack Tecnológico
-* **Lenguaje:** Python 3.x.
-* **Librerías:** TensorFlow, Keras, NumPy, Matplotlib.
-* **Entorno:** Google Colab con soporte de GPU para aceleración del entrenamiento.
+* **Lenguaje:** Python 3.12
+* **Framework principal:** TensorFlow / Keras
+* **Procesamiento de Datos:** NumPy, Pandas
+* **Visualización:** Matplotlib, Seaborn
+* **Entorno:** Google Colab con aceleración por GPU (T4)
 
-## Resultados y Métricas
-* **Precisión reportada:** 100% (Entrenamiento y Validación).
-* **Análisis técnico:** Se identificó un escenario de sobreajuste (overfitting) debido a la alta similitud entre los conjuntos de datos. 
-* **Desafío actual:** El modelo presenta dificultades en la generalización con imágenes del mundo real (fuera del dataset de Skyland).
-* **Próximos pasos:** Implementar técnicas de *Dropout* más agresivas, aumentar el dataset con imágenes externas y aplicar *Cross-Validation* para asegurar la robustez del modelo.
-  
-* ## Optimización y Resolución de Problemas
-Durante el desarrollo, se identificó y corrigió un problema de **Data Leakage** y **Sesgo de Clase**.
-* **Problema**: El modelo presentaba un Accuracy ficticio de 100% y clasificaba todo como "Airport".
-* **Solución**: Se reestructuraron los generadores de datos con un split real de 80/20, se aplicó *Data Augmentation* y se ajustó la capa de salida a 15 neuronas con activación Softmax.
-* **Resultado Final**: Precisión estable de ~75% en validación, demostrando una capacidad real de clasificación de paisajes aéreos.
+## Resultados y Optimización Técnica
+A diferencia de implementaciones convencionales, este proyecto atravesó una fase crítica de optimización tras detectar un escenario de **sobreajuste (overfitting)** y **fuga de datos (data leakage)**.
 
-* ## Análisis de tus Nuevos resultados  
-* **Curvas Saludables** : La precisión de entrenamiento (línea azul) sube gradualmente hasta superar el 80%, mientras que la de validación (línea naranja) la sigue de cerca del 75%. Esto indica que el modelo ahora sí tiene capacidad de generalizar a paisajes que no ha visto antes.
+### Evolución del Modelo:
+1. **Detección del Problema:** El modelo inicial reportaba un Accuracy ficticio de 1.0 (100%) pero clasificaba erróneamente todas las muestras como "Airport".
+2. **Acción Correctiva:** Se reconfiguraron los generadores de datos para asegurar un *split* real (80% Train / 20% Validation) y se activó el mezclado aleatorio (*shuffle*).
+3. **Mejora de Arquitectura:** Se integraron capas de **Dropout (0.5)** y una capa densa de 512 neuronas antes de la salida Softmax de 15 clases.
 
-* **Pérdida (Loss) en Descenso** : Ambas curvas de pérdida están bajando de forma constante, lo que confirma que el optimizador está encontrando los pesos correctos para identificar los paisajes de Skyview.
+### Métricas Finales:
+* **Precisión de Validación:** 76%
+* **Precisión de Entrenamiento:** 85%
+* **Comportamiento:** Las curvas de pérdida muestran una convergencia saludable, demostrando una capacidad de generalización real en entornos de producción.
 
-* **Sin Overfitting Extremo** : A diferencia de la línea recta en 1.0 que tenía antes, estas curvas muestran un comportamiento real de una red neuronal profunda.
 
-## Contenido del Repositorio
-* `notebooks/`: Archivo .ipynb con el flujo de entrenamiento y validación.
-* `reports/`: Informe final del sistema inteligente y presentación de resultados.
+
+## Estructura del Repositorio
+* `notebooks/`: Cuaderno de Google Colab con el flujo completo de entrenamiento.
+* `reports/`: Gráficas de rendimiento y Matriz de Confusión final.
+* `src/`: Scripts auxiliares para la carga de datos.
+
+---
+**Desarrollado por [Carolina Montanares]** *Estudiante de Ingeniería en Informática - Universidad Bernardo Ohiggins*
